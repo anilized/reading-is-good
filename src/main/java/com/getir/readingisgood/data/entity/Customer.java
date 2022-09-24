@@ -3,16 +3,18 @@ package com.getir.readingisgood.data.entity;
 import lombok.Builder;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 @Data
 @Builder
-@Table
+@Table(name = "customer")
 @Entity
 public class Customer {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @NotNull
     private Long customerId;
 
     private String name;
@@ -20,5 +22,8 @@ public class Customer {
 
     private String email;
     private String password;
+
+    @OneToMany(mappedBy = "customer")
+    private Set<Order> orders;
 
 }

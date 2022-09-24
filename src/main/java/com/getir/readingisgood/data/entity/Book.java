@@ -3,17 +3,18 @@ package com.getir.readingisgood.data.entity;
 import lombok.Builder;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Data
 @Builder
-@Table
+@Table(name = "book")
 @Entity
 public class Book {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @NotNull
     private Long bookId;
 
     private String name;
