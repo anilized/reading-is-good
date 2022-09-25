@@ -11,6 +11,7 @@ import org.hibernate.annotations.Parameter;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Null;
 import java.io.Serializable;
+import java.util.Set;
 
 @Data
 @Builder
@@ -20,7 +21,6 @@ public class CustomerDTO implements Serializable {
     @JsonDeserialize
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long customerId;
-
 
     @Email
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -34,5 +34,4 @@ public class CustomerDTO implements Serializable {
     private String name;
     @NonNull
     private String surname;
-
 }
