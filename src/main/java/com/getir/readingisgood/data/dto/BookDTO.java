@@ -16,7 +16,6 @@ public class BookDTO implements Serializable {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long bookId;
 
-    @NonNull
     private String name;
     private String authorName;
 
