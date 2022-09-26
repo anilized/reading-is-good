@@ -22,7 +22,6 @@ public class CustomerController implements IBaseController {
     public ResponseEntity<CustomerDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok(customerService.findById(id));
     }
-
     @PostMapping("/create")
     public ResponseEntity<CustomerDTO> createCustomer(@RequestBody CustomerDTO customerDTO) {
         return new ResponseEntity<>(customerService.createCustomer(customerDTO), HttpStatus.CREATED);

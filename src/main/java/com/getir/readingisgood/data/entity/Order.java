@@ -1,7 +1,11 @@
 package com.getir.readingisgood.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -11,6 +15,8 @@ import java.util.Set;
 @Builder
 @Table(name = "order_table")
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class Order {
 
     @Id
@@ -22,7 +28,7 @@ public class Order {
 
     private String status;
     private Date createDate;
-    @OneToOne(mappedBy = "order")
-    private OrderDetail orderDetails;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    private Set<OrderDetail> orderDetails;
 
 }

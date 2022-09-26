@@ -10,8 +10,6 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class CustomerMapper implements Mapper<Customer, CustomerDTO> {
 
-
-
     @Override
     public CustomerDTO toDTO(Customer customer) {
         return CustomerDTO.builder()

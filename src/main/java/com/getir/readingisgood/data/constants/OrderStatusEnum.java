@@ -7,8 +7,15 @@ public enum OrderStatusEnum {
     PROCESSING ("PROCESSING"),
     SHIPPED ("SHIPPED");
 
-    public final String status;
+    private final String status;
+
+    public String getStatus() {
+        return status;
+    }
+
     private OrderStatusEnum(String status) {
         this.status = status;
     }
+
+
 }

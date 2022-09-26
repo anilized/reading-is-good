@@ -14,7 +14,7 @@ import javax.validation.constraints.Min;
 
 @RestController
 @RequestMapping("/api/book")
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+@PreAuthorize("hasRole('ROLE_CUSTOMER')")
 @RequiredArgsConstructor
 public class BookController implements IBaseController {
 

@@ -25,19 +25,23 @@ public class BookServiceImpl implements IBookService {
     @Override
     public BookDTO createBook(BookDTO bookDTO) {
         Book book = mapper.toEntity(bookDTO);
-        bookRepository.save(book);
+        bookRepository.saveAndFlush(book);
         return mapper.toDTO(book);
     }
 
     @Override
     public BookDTO updateBookStock(BookDTO bookDTO, int stock) throws RuntimeException{
-        Book book = mapper.toEntity(bookDTO);
-        book.setStock(stock);
-        try {
-            bookRepository.save(book);
-            return mapper.toDTO(book);
-        } catch (RuntimeException e) {
-            throw e;
+        if(isStockAvailable(bookDTO, stock)) {
+            Book book = mapper.toEntity(bookDTO);
+            book.setStock(stock);
+            try {
+                bookRepository.save(book);
+                return mapper.toDTO(book);
+            } catch (RuntimeException e) {
+                throw e;
+            }
+        } else {
+            throw new RuntimeException("Stock unavailable");
         }
     }
 
