@@ -46,7 +46,7 @@ public class OrderServiceImpl implements IOrderService {
 
     @Override
     public Page<OrderDTO> findAllOrdersWithDateInterval(DateIntervalRequest dateIntervalRequest, PaginationRequest paginationRequest) {
-        return orderRepository.findAllByCreateDate(dateIntervalRequest.getStartDate(),
+        return orderRepository.findAllByCreateDateBetween(dateIntervalRequest.getStartDate(),
                 dateIntervalRequest.getEndDate(),
                 PageRequest.of(paginationRequest.getPage(), paginationRequest.getSize()))
                 .map(orderMapper::toDTO);

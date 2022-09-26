@@ -10,6 +10,6 @@ import java.util.Date;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
     Page<Order> findAllByCustomer(Long customerId, Pageable pageable);
-    Page<Order> findAllByCreateDate(Date startDate, Date endDate, Pageable pageable);
+    Page<Order> findAllByCreateDateBetween(Date startDate, Date endDate, Pageable pageable);
 
 }
