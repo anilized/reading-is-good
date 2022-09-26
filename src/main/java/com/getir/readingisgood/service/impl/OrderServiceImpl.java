@@ -6,6 +6,8 @@ import com.getir.readingisgood.data.domain.request.PaginationRequest;
 import com.getir.readingisgood.data.dto.CustomerDTO;
 import com.getir.readingisgood.data.dto.OrderDTO;
 import com.getir.readingisgood.data.entity.Order;
+import com.getir.readingisgood.data.entity.OrderDetail;
+import com.getir.readingisgood.data.mapper.OrderDetailMapper;
 import com.getir.readingisgood.data.mapper.OrderMapper;
 import com.getir.readingisgood.data.repository.OrderRepository;
 import com.getir.readingisgood.service.IOrderDetailService;
@@ -14,10 +16,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +25,8 @@ public class OrderServiceImpl implements IOrderService {
 
     private final OrderRepository orderRepository;
     private final OrderMapper orderMapper;
+
+    private final OrderDetailMapper orderDetailMapper;
     private final IOrderDetailService orderDetailService;
 
     @Override
@@ -48,13 +50,17 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     public OrderDTO createOrder(OrderDTO orderDTO, CustomerDTO customerDTO) {
         orderDTO.getOrderDetailSet().stream().forEach(orderDetailService::createOrderDetail);
+        Set<OrderDetail> orderDetailSet = orderDetailMapper.toEntitySet(orderDTO.getOrderDetailSet());
         orderDTO.setCustomer(customerDTO);
         orderDTO.setStatus(OrderStatusEnum.PENDING.getStatus());
         orderDTO.setCreateDate(new Date());
-        Order order = orderRepository.save(orderMapper.toEntity(orderDTO));
+        Order order = orderMapper.toEntity(orderDTO);
+        for(OrderDetail orderDetail : orderDetailSet) {
+            orderDetail.setOrder(order);
+        }
+        order.setOrderDetails(orderDetailSet);
+        order = orderRepository.save(order);
         orderDTO.setOrderId(order.getId());
-        List<Long> orderDetailIdList = order.getOrderDetails().stream().map(r->r.getId()).collect(Collectors.toList());
-        orderDetailService.updateOrderDetails(order.getId(), orderDetailIdList);
         return orderDTO;
     }
 }

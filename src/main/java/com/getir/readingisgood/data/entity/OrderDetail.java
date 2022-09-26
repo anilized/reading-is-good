@@ -32,8 +32,7 @@ public class OrderDetail implements Serializable {
     private int amount;
     private Double price;
 
-    @ManyToOne
-    @JoinColumn(name = "orderId")
-    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "orderId", referencedColumnName = "id", nullable = false)
     private Order order;
 }
