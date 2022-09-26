@@ -14,13 +14,13 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class OrderDetailMapper implements Mapper<OrderDetail, OrderDetailDTO> {
 
+    //TODO: Find a better way to avoid StackOverflowException on toMany relations when mapping rather than setting object to null
     @Override
     public OrderDetailDTO toDTO(OrderDetail orderDetail) {
         BookMapper bookMapper = new BookMapper();
-        OrderMapper orderMapper = new OrderMapper();
         return OrderDetailDTO.builder()
                 .id(orderDetail.getId())
-                .order(orderMapper.toDTO(orderDetail.getOrder()))
+                .order(null)
                 .price(orderDetail.getPrice())
                 .amount(orderDetail.getAmount())
                 .book(bookMapper.toDTO(orderDetail.getBook()))
@@ -29,7 +29,8 @@ public class OrderDetailMapper implements Mapper<OrderDetail, OrderDetailDTO> {
     }
 
     public Set<OrderDetailDTO> toDTOSet(Set<OrderDetail> orderDetailSet) {
-        Set<OrderDetailDTO> orderDetailDTOSet = (Set<OrderDetailDTO>) orderDetailSet.stream().map(r -> toDTO(r)).collect(Collectors.toList());
+        List<OrderDetailDTO> orderDetailDTOList= orderDetailSet.stream().map(r -> toDTO(r)).collect(Collectors.toList());
+        Set<OrderDetailDTO> orderDetailDTOSet = new HashSet<>(orderDetailDTOList);
         return orderDetailDTOSet;
     }
 

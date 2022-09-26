@@ -6,12 +6,11 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NonNull;
-import org.hibernate.annotations.Parameter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Null;
 import java.io.Serializable;
-import java.util.Set;
+
 
 @Data
 @Builder
@@ -23,7 +22,6 @@ public class CustomerDTO implements Serializable {
     private Long customerId;
 
     @Email
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String email;
 
     @JsonIgnore

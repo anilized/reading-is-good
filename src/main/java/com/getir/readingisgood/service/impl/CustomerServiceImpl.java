@@ -43,7 +43,7 @@ public class CustomerServiceImpl implements ICustomerService {
         // ADD REGISTERED USER TO TABLE IF DOES NOT REGISTERED BEFORE
         getByEmail(customer.getEmail()).ifPresentOrElse(customerDTO1 -> {
             throw new RuntimeException("Customer allready exists");
-        }, () -> customerRepository.saveAndFlush(customer));
+        }, () -> customerRepository.save(customer));
         return customerDTO;
     }
 

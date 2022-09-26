@@ -19,6 +19,7 @@ public class BookMapper implements Mapper<Book, BookDTO>{
                 .price(book.getPrice())
                 .stock(book.getStock())
                 .authorName(book.getAuthorName())
+                .version(book.getVersion())
                 .build();
     }
 
@@ -30,6 +31,7 @@ public class BookMapper implements Mapper<Book, BookDTO>{
                 .authorName(bookDTO.getAuthorName())
                 .stock(bookDTO.getStock())
                 .price(bookDTO.getPrice())
+                .version(bookDTO.getVersion())
                 .build();
     }
 }

@@ -14,6 +14,7 @@ import com.getir.readingisgood.service.IOrderDetailService;
 import com.getir.readingisgood.service.IOrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
@@ -38,12 +39,17 @@ public class OrderServiceImpl implements IOrderService {
 
     @Override
     public Page<OrderDTO> findAllOrdersByCustomerId(Long customerId, PaginationRequest paginationRequest) {
-        return null;
+        return orderRepository.findAllByCustomer(customerId,
+                PageRequest.of(paginationRequest.getPage(), paginationRequest.getSize()))
+                .map(orderMapper::toDTO);
     }
 
     @Override
     public Page<OrderDTO> findAllOrdersWithDateInterval(DateIntervalRequest dateIntervalRequest, PaginationRequest paginationRequest) {
-        return null;
+        return orderRepository.findAllByCreateDate(dateIntervalRequest.getStartDate(),
+                dateIntervalRequest.getEndDate(),
+                PageRequest.of(paginationRequest.getPage(), paginationRequest.getSize()))
+                .map(orderMapper::toDTO);
     }
 
     @Transactional

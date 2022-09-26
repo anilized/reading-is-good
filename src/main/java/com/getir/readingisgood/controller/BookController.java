@@ -14,13 +14,13 @@ import javax.validation.constraints.Min;
 
 @RestController
 @RequestMapping("/api/book")
-@PreAuthorize("hasRole('ROLE_CUSTOMER')")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 @RequiredArgsConstructor
 public class BookController implements IBaseController {
 
     private final IBookService bookService;
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<BookDTO> createBook(@Valid @RequestBody BookDTO bookDTO) {
         return new ResponseEntity<>(bookService.createBook(bookDTO), HttpStatus.CREATED);
     }

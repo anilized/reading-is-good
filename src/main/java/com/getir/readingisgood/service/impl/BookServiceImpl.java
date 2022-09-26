@@ -7,7 +7,6 @@ import com.getir.readingisgood.data.repository.BookRepository;
 import com.getir.readingisgood.service.IBookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 @Service
 @RequiredArgsConstructor
 public class BookServiceImpl implements IBookService {
@@ -25,7 +24,7 @@ public class BookServiceImpl implements IBookService {
     @Override
     public BookDTO createBook(BookDTO bookDTO) {
         Book book = mapper.toEntity(bookDTO);
-        bookRepository.saveAndFlush(book);
+        bookRepository.save(book);
         return mapper.toDTO(book);
     }
 

@@ -2,11 +2,14 @@ package com.getir.readingisgood.controller;
 
 import com.getir.readingisgood.auth.service.impl.UserDetailsImpl;
 import com.getir.readingisgood.controller.base.IBaseController;
+import com.getir.readingisgood.data.domain.request.DateIntervalRequest;
+import com.getir.readingisgood.data.domain.request.PaginationRequest;
 import com.getir.readingisgood.data.dto.CustomerDTO;
 import com.getir.readingisgood.data.dto.OrderDTO;
 import com.getir.readingisgood.service.ICustomerService;
 import com.getir.readingisgood.service.IOrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -33,6 +36,12 @@ public class OrderController implements IBaseController {
     @GetMapping("/{id}")
     public ResponseEntity<OrderDTO> findOrderById(@PathVariable Long id) {
         return ResponseEntity.ok(orderService.findOrderById(id));
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/orders-between-dates")
+    public ResponseEntity<Page<OrderDTO>> findAllOrdersBetweenDates(@Valid DateIntervalRequest dateIntervalRequest, @Valid PaginationRequest paginationRequest) {
+        return ResponseEntity.ok(orderService.findAllOrdersWithDateInterval(dateIntervalRequest, paginationRequest));
     }
 
 }

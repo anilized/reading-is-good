@@ -7,6 +7,5 @@ public interface IBookService {
     BookDTO findById(Long id);
     BookDTO createBook(BookDTO bookDTO);
     BookDTO updateBookStock(BookDTO bookDTO, int newStock);
-
-    boolean isStockAvailable(BookDTO bookDTO, int amout);
+    boolean isStockAvailable(BookDTO bookDTO, int amount);
 }

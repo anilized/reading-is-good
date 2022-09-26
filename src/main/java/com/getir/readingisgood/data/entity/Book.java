@@ -4,21 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
-
 @Data
 @Builder
 @Table(name = "book")
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Book implements Serializable {
-
-    private static final long serialVersionUID = -1351839648270983345L;
-
+public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
@@ -29,5 +23,8 @@ public class Book implements Serializable {
 
     private int stock;
     private double price;
+
+    @Version // Optimistic Locking
+    private Long version;
 
 }
