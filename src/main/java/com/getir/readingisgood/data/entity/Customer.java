@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @Data
 @Builder
@@ -13,7 +14,8 @@ import javax.validation.constraints.NotNull;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Customer {
+public class Customer implements Serializable {
+    private static final long serialVersionUID = 4672956563103427805L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull

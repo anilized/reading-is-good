@@ -2,7 +2,6 @@ package com.getir.readingisgood.service.impl;
 
 import com.getir.readingisgood.data.dto.BookDTO;
 import com.getir.readingisgood.data.dto.OrderDetailDTO;
-import com.getir.readingisgood.data.repository.OrderDetailRepository;
 import com.getir.readingisgood.service.IBookService;
 import com.getir.readingisgood.service.IOrderDetailService;
 import lombok.RequiredArgsConstructor;
@@ -15,23 +14,28 @@ import java.util.List;
 public class OrderDetailServiceImpl implements IOrderDetailService {
 
     private final IBookService bookService;
-    private final OrderDetailRepository orderDetailRepository;
-
     @Override
     public OrderDetailDTO createOrderDetail(OrderDetailDTO orderDetailDTO) {
         BookDTO bookDTO = bookService.findById(orderDetailDTO.getBookId());
-        orderDetailDTO.setPrice(bookDTO.getPrice() * orderDetailDTO.getAmount());
-        orderDetailDTO.setBook(bookDTO);
-        orderDetailDTO.setBookId(bookDTO.getBookId());
+        calculatePrice(bookDTO,orderDetailDTO);
+        sellBook(bookDTO, orderDetailDTO);
         return orderDetailDTO;
     }
 
-    @Override
-    public int updateOrderDetails(Long orderId, List<Long> idList) {
-        int count = 0;
-        for(Long id : idList) {
-            count+=orderDetailRepository.updateOrderId(orderId,id);
+
+    private void sellBook(BookDTO bookDTO, OrderDetailDTO orderDetailDTO) {
+        if(bookService.isStockAvailable(bookDTO,orderDetailDTO.getAmount())) {
+            bookService.updateBookStock(bookDTO, bookDTO.getStock() - orderDetailDTO.getAmount());
+        } else {
+            //TODO: Create new exception
+            throw new RuntimeException("Stock not available");
         }
-        return count;
+
+    }
+
+    private void calculatePrice(BookDTO bookDTO,OrderDetailDTO orderDetailDTO) {
+        orderDetailDTO.setPrice(bookDTO.getPrice() * orderDetailDTO.getAmount());
+        orderDetailDTO.setBook(bookDTO);
+        orderDetailDTO.setBookId(bookDTO.getBookId());
     }
 }

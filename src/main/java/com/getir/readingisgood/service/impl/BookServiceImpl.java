@@ -31,7 +31,6 @@ public class BookServiceImpl implements IBookService {
 
     @Override
     public BookDTO updateBookStock(BookDTO bookDTO, int stock) throws RuntimeException{
-        if(isStockAvailable(bookDTO, stock)) {
             Book book = mapper.toEntity(bookDTO);
             book.setStock(stock);
             try {
@@ -40,9 +39,6 @@ public class BookServiceImpl implements IBookService {
             } catch (RuntimeException e) {
                 throw e;
             }
-        } else {
-            throw new RuntimeException("Stock unavailable");
-        }
     }
 
     @Override

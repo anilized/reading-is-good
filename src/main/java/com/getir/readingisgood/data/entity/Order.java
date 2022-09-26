@@ -1,13 +1,12 @@
 package com.getir.readingisgood.data.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
@@ -17,7 +16,8 @@ import java.util.Set;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Order {
+public class Order implements Serializable {
+    private static final long serialVersionUID = -192133758060230170L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
