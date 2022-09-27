@@ -9,6 +9,9 @@ import com.getir.readingisgood.auth.entity.User;
 import com.getir.readingisgood.auth.repository.IRoleRepository;
 import com.getir.readingisgood.auth.repository.IUserRepository;
 import com.getir.readingisgood.auth.service.AuthService;
+import com.getir.readingisgood.exception.AuthNotSupported;
+import com.getir.readingisgood.exception.CustomerAlreadyExistsException;
+import com.getir.readingisgood.exception.UsernameAlreadyInUseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -48,11 +51,11 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public User registerUser(SignupRequest signUpRequest) {
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-            throw new RuntimeException("Error: Username is already taken!");
+            throw new UsernameAlreadyInUseException();
         }
 
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-            throw new RuntimeException("Error: Email is already in use!");
+            throw new CustomerAlreadyExistsException();
         }
         // Create new user's account
         User user = new User();
@@ -63,29 +66,22 @@ public class AuthServiceImpl implements AuthService {
         user.setPassword(encoder.encode(signUpRequest.getPassword()));
         Set<String> strRoles = signUpRequest.getRoles();
         Set<Role> roles = new HashSet<>();
-
-        if (strRoles == null) {
-            Role userRole = roleRepository.findByName(ERole.ROLE_CUSTOMER)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-            roles.add(userRole);
-        } else {
-            strRoles.forEach(role -> {
-                switch (role) {
-                    case "admin":
-                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(adminRole);
-                        break;
-                    case "customer":
-                        Role customerRole = roleRepository.findByName(ERole.ROLE_CUSTOMER)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(customerRole);
-                        break;
-                    default:
-                        throw new RuntimeException("Error: Role not found");
-                }
-            });
-        }
+        strRoles.forEach(role -> {
+            switch (role) {
+                case "admin":
+                    Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+                            .orElseThrow(() -> new AuthNotSupported());
+                    roles.add(adminRole);
+                    break;
+                case "customer":
+                    Role customerRole = roleRepository.findByName(ERole.ROLE_CUSTOMER)
+                            .orElseThrow(() -> new AuthNotSupported());
+                    roles.add(customerRole);
+                    break;
+                default:
+                    throw new AuthNotSupported();
+            }
+        });
         user.setRoles(roles);
         userRepository.save(user);
         return user;

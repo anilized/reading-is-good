@@ -10,6 +10,7 @@ import com.getir.readingisgood.data.entity.OrderDetail;
 import com.getir.readingisgood.data.mapper.OrderDetailMapper;
 import com.getir.readingisgood.data.mapper.OrderMapper;
 import com.getir.readingisgood.data.repository.OrderRepository;
+import com.getir.readingisgood.exception.OrderNotFoundException;
 import com.getir.readingisgood.service.IOrderDetailService;
 import com.getir.readingisgood.service.IOrderService;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +36,7 @@ public class OrderServiceImpl implements IOrderService {
     public OrderDTO findOrderById(Long id) {
         return orderRepository.findById(id)
                 .map(orderMapper::toDTO)
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(OrderNotFoundException::new);
     }
 
     @Override

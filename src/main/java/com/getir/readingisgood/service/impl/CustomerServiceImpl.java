@@ -7,6 +7,7 @@ import com.getir.readingisgood.data.dto.CustomerDTO;
 import com.getir.readingisgood.data.entity.Customer;
 import com.getir.readingisgood.data.mapper.CustomerMapper;
 import com.getir.readingisgood.data.repository.CustomerRepository;
+import com.getir.readingisgood.exception.CustomerAlreadyExistsException;
 import com.getir.readingisgood.service.ICustomerService;
 import com.getir.readingisgood.util.CreateCustomerHelper;
 import lombok.RequiredArgsConstructor;
@@ -30,19 +31,15 @@ public class CustomerServiceImpl implements ICustomerService {
     @Override
     public CustomerDTO createCustomer(CustomerDTO customerDTO) {
         SignupRequest signupRequest = CreateCustomerHelper.mapToSignUpRequest(customerDTO);
-        try {
-            // REGISTER USER WITH AUTH SERVICE
-            authService.registerUser(signupRequest);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            e.printStackTrace();
-        }
+
+        // REGISTER USER WITH AUTH SERVICE
+        authService.registerUser(signupRequest);
         Customer customer = customerMapper.toEntity(customerDTO);
         customer.setPassword(customerDTO.getEmail());
 
         // ADD REGISTERED USER TO TABLE IF DOES NOT REGISTERED BEFORE
         getByEmail(customer.getEmail()).ifPresentOrElse(customerDTO1 -> {
-            throw new RuntimeException("Customer allready exists");
+            throw new CustomerAlreadyExistsException();
         }, () -> customerRepository.save(customer));
         return customerDTO;
     }
