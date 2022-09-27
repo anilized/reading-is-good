@@ -9,6 +9,7 @@ import com.getir.readingisgood.data.dto.OrderDTO;
 import com.getir.readingisgood.service.ICustomerService;
 import com.getir.readingisgood.service.IOrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +41,7 @@ public class OrderController implements IBaseController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/orders-between-dates")
-    public ResponseEntity<Page<OrderDTO>> findAllOrdersBetweenDates(@Valid DateIntervalRequest dateIntervalRequest, @Valid PaginationRequest paginationRequest) {
+    public ResponseEntity<Page<OrderDTO>> findAllOrdersBetweenDates(@RequestBody @Valid DateIntervalRequest dateIntervalRequest, @Valid PaginationRequest paginationRequest) {
         return ResponseEntity.ok(orderService.findAllOrdersWithDateInterval(dateIntervalRequest, paginationRequest));
     }
 

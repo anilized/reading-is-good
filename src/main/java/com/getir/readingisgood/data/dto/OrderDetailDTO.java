@@ -12,7 +12,6 @@ public class OrderDetailDTO {
     private Long bookId;
     private BookDTO book;
     private int amount;
-    @JsonIgnore
     private Double price;
     @JsonIgnore
     private OrderDTO order;

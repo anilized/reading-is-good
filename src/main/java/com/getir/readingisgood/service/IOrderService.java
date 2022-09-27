@@ -6,6 +6,8 @@ import com.getir.readingisgood.data.dto.CustomerDTO;
 import com.getir.readingisgood.data.dto.OrderDTO;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 public interface IOrderService {
     OrderDTO findOrderById(Long id);
     Page<OrderDTO> findAllOrdersByCustomerId(Long customerId, PaginationRequest paginationRequest);
