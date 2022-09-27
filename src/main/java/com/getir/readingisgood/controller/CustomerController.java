@@ -29,7 +29,7 @@ public class CustomerController implements IBaseController {
         return ResponseEntity.ok(customerService.findById(id));
     }
     @PostMapping("/create")
-    public ResponseEntity<CustomerDTO> createCustomer(@RequestBody CustomerDTO customerDTO) {
+    public ResponseEntity<CustomerDTO> createCustomer(@RequestBody @Valid CustomerDTO customerDTO) {
         return new ResponseEntity<>(customerService.createCustomer(customerDTO), HttpStatus.CREATED);
     }
     @GetMapping("/{id}/orders")
