@@ -1,8 +1,9 @@
 package com.getir.readingisgood.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.getir.readingisgood.data.dto.BookDTO;
-import com.getir.readingisgood.service.IBookService;
+import com.getir.readingisgood.data.domain.request.PaginationRequest;
+import com.getir.readingisgood.data.dto.CustomerDTO;
+import com.getir.readingisgood.service.ICustomerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,77 +28,63 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc(addFilters = false)
 @Rollback(value = true)
 @ActiveProfiles("test")
-public class BookControllerIT {
+public class CustomerControllerIT {
 
-    private MockMvc mockMvc;
     @MockBean
-    private IBookService bookService;
+    ICustomerService customerService;
 
     @Autowired
     private WebApplicationContext context;
 
-    private BookDTO bookDTORequest;
-    private BookDTO bookDTOResponse;
-    private BookDTO bookDTO1;
-    private BookDTO bookDTO2;
+    private MockMvc mockMvc;
+
+    private CustomerDTO customerDTO;
+    private CustomerDTO customerDTO2;
+    private PaginationRequest paginationRequest;
 
     @BeforeEach
     public void setup() {
         mockMvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
+        customerDTO = new CustomerDTO();
+        customerDTO.setName("test");
+        customerDTO.setSurname("test");
+        customerDTO.setEmail("test@gmail.com");
 
-        bookDTO1 = new BookDTO();
-        bookDTO1.setName("test book");
-        bookDTO1.setStock(2);
-        bookDTO1.setPrice(100);
-        bookDTO1.setAuthorName("test author");
+        paginationRequest = new PaginationRequest();
+        paginationRequest.setSize(1);
+        paginationRequest.setPage(0);
 
-        bookDTO2 = new BookDTO();
-        bookDTO2.setName("test book");
-        bookDTO2.setStock(2);
-        bookDTO2.setPrice(100);
-        bookDTO2.setAuthorName("test author");
-
-        bookDTORequest = new BookDTO();
-        bookDTORequest.setBookId(1L);
-        bookDTORequest.setName("test book");
-        bookDTORequest.setStock(2);
-        bookDTORequest.setPrice(100);
-        bookDTORequest.setAuthorName("test author");
-
-        bookDTOResponse = new BookDTO();
-        bookDTOResponse.setBookId(1L);
-        bookDTOResponse.setName("test book");
-        bookDTOResponse.setStock(2);
-        bookDTOResponse.setPrice(100);
-        bookDTOResponse.setAuthorName("test author");
+        customerDTO2 = new CustomerDTO();
+        customerDTO2.setCustomerId(1L);
+        customerDTO2.setName("test");
+        customerDTO2.setSurname("test");
+        customerDTO2.setEmail("test@gmail.com");
     }
 
     @Test
     @WithMockUser(authorities = "ROLE_ADMIN")
-    public void createBook_whenValidBookDtoGiven_shouldReturnCreated() throws Exception {
-        when(bookService.createBook(bookDTO1)).thenReturn(bookDTO2);
+    public void createCustomer_whenValidCustomerDTOGiven_shouldReturnCreated() throws Exception {
+        when(customerService.createCustomer(customerDTO)).thenReturn(customerDTO);
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders
-                        .post("/api/book")
-                        .content(asJsonString(bookDTO1))
+                        .post("/api/customer/create")
+                        .content(asJsonString(customerDTO))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
-                        .andExpect(status().isCreated()).andReturn();
-        verify(bookService).createBook(bookDTO2);
+                .andExpect(status().isCreated()).andReturn();
+        verify(customerService).createCustomer(customerDTO);
     }
 
     @Test
     @WithMockUser(authorities = "ROLE_ADMIN")
-    public void updateBook_whenValidBookDtoGiven_shouldReturnOK() throws Exception {
-        bookDTOResponse.setStock(3);
-        when(bookService.findById(1L)).thenReturn(bookDTORequest);
-        when(bookService.updateBookStock(bookDTORequest,3)).thenReturn(bookDTOResponse);
+    public void findById_whenCustomerIdGiven_shouldReturnResponse() throws Exception {
+        when(customerService.findById(1L)).thenReturn(customerDTO2);
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders
-                        .put("/api/book/{id}", "1").queryParam("stock", "3")
-                        .content(asJsonString(bookDTORequest))
+                        .get("/api/customer/{id}", "1")
+                        .content(asJsonString(customerDTO))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andReturn();
-        verify(bookService).updateBookStock(bookDTORequest,3);
+        verify(customerService).findById(1L);
     }
 
     public static String asJsonString(final Object obj) {
@@ -109,3 +96,5 @@ public class BookControllerIT {
     }
 
 }
+
+
