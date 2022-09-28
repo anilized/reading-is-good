@@ -2,10 +2,7 @@ package com.getir.readingisgood.data.constants;
 
 public enum OrderStatusEnum {
 
-    PENDING ("PENDING"),
-    CANCELLED ("CANCELLED"),
-    PROCESSING ("PROCESSING"),
-    SHIPPED ("SHIPPED");
+    PENDING ("PENDING");
 
     private final String status;
 
