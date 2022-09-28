@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class OrderDetailServiceImpl implements IOrderDetailService {
 
     private final IBookService bookService;
@@ -22,7 +21,6 @@ public class OrderDetailServiceImpl implements IOrderDetailService {
     @Retryable(value = StockModifiedException.class, maxAttempts = 4, backoff = @Backoff(delay = 3000, multiplier = 2, maxDelay = 9000))
     @Override
     public OrderDetailDTO createOrderDetail(OrderDetailDTO orderDetailDTO) {
-        log.info("createOrderDetail started");
         BookDTO bookDTO = bookService.findById(orderDetailDTO.getBookId());
         isStockAvailable(bookDTO, orderDetailDTO);
         calculatePrice(bookDTO, orderDetailDTO);

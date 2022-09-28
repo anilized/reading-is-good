@@ -25,11 +25,6 @@ public class OrderMapper implements Mapper<Order, OrderDTO> {
                 .build();
     }
 
-    public Set<OrderDTO> toOrderDTOSet (Set<Order> orders) {
-        Set<OrderDTO> orderDTOSet = (Set<OrderDTO>) orders.stream().map(r -> toDTO(r)).collect(Collectors.toList());
-        return orderDTOSet;
-    }
-
     @Override
     public Order toEntity(OrderDTO orderDTO) {
         CustomerMapper customerMapper = new CustomerMapper();
@@ -40,10 +35,5 @@ public class OrderMapper implements Mapper<Order, OrderDTO> {
                 .orderDetails(orderDetailMapper.toEntitySet(orderDTO.getOrderDetailSet()))
                 .createDate(orderDTO.getCreateDate())
                 .build();
-    }
-
-    public Set<Order> toOrderSet (Set<OrderDTO> orders) {
-        Set<Order> orderSet = (Set<Order>) orders.stream().map(r -> toEntity(r)).collect(Collectors.toList());
-        return orderSet;
     }
 }

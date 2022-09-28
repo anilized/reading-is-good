@@ -8,6 +8,7 @@ import com.getir.readingisgood.data.entity.Customer;
 import com.getir.readingisgood.data.mapper.CustomerMapper;
 import com.getir.readingisgood.data.repository.CustomerRepository;
 import com.getir.readingisgood.exception.CustomerAlreadyExistsException;
+import com.getir.readingisgood.exception.CustomerNotFoundException;
 import com.getir.readingisgood.service.ICustomerService;
 import com.getir.readingisgood.util.CreateCustomerHelper;
 import lombok.RequiredArgsConstructor;
@@ -46,7 +47,7 @@ public class CustomerServiceImpl implements ICustomerService {
 
     @Override
     public CustomerDTO findById(Long id) {
-        return customerRepository.findById(id).map(customerMapper::toDTO).orElseThrow(RuntimeException::new);
+        return customerRepository.findById(id).map(customerMapper::toDTO).orElseThrow(CustomerNotFoundException::new);
     }
 
     @Override

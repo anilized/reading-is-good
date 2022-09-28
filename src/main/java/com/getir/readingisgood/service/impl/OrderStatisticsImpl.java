@@ -4,6 +4,7 @@ import com.getir.readingisgood.data.domain.request.IOrderReport;
 import com.getir.readingisgood.data.domain.response.OrderReport;
 import com.getir.readingisgood.data.repository.OrderRepository;
 import com.getir.readingisgood.exception.CustomerHasNoOrderException;
+import com.getir.readingisgood.exception.OrderNotFoundException;
 import com.getir.readingisgood.service.IOrderStatisticService;
 import com.getir.readingisgood.util.ProjectionToResponseHelper;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,10 @@ public class OrderStatisticsImpl implements IOrderStatisticService {
     @Override
     public List<OrderReport> getOrderStatistics() {
         List<IOrderReport> orderReports = orderRepository.generateReportForAllOrders();
-        return helper.createOrderReport(orderReports);
+        if(orderReports.size() == 0 || null == orderReports) {
+            throw new OrderNotFoundException();
+        } else {
+            return helper.createOrderReport(orderReports);
+        }
     }
 }
