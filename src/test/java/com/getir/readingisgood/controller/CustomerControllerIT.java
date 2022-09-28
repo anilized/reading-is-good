@@ -66,7 +66,7 @@ public class CustomerControllerIT {
     public void createCustomer_whenValidCustomerDTOGiven_shouldReturnCreated() throws Exception {
         when(customerService.createCustomer(customerDTO)).thenReturn(customerDTO);
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders
-                        .post("/api/customer/create")
+                        .post("/api/customer")
                         .content(asJsonString(customerDTO))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))

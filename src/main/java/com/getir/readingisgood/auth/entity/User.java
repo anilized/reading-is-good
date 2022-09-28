@@ -1,5 +1,4 @@
 package com.getir.readingisgood.auth.entity;
-import com.getir.readingisgood.auth.service.impl.UserDetailsImpl;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -15,10 +14,7 @@ import java.util.Set;
                 @UniqueConstraint(columnNames = "email")
         })
 public class User  {
-    public User() {
-        super();
-    }
-
+    public User() {}
     public User(Long id, String username, String email, String password, String name, String surname, Set<Role> roles) {
         this.id = id;
         this.username = username;

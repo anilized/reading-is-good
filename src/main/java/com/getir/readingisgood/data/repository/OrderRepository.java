@@ -1,7 +1,6 @@
 package com.getir.readingisgood.data.repository;
 
 import com.getir.readingisgood.data.domain.request.IOrderReport;
-import com.getir.readingisgood.data.dto.OrderDTO;
 import com.getir.readingisgood.data.entity.Order;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
