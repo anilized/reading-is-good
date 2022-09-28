@@ -12,6 +12,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
@@ -20,6 +24,8 @@ class OrderDetailMapperTest {
     OrderDetailMapper orderDetailMapper;
     OrderDetail orderDetail;
     OrderDetailDTO orderDetailDTO;
+    Set<OrderDetailDTO> orderDetailDTOSet;
+    Set<OrderDetail> orderDetailSet;
     @BeforeEach
     void setup() {
         orderDetailMapper = new OrderDetailMapper();
@@ -36,6 +42,10 @@ class OrderDetailMapperTest {
         orderDetailDTO.setPrice(1.0);
         orderDetailDTO.setBook(new BookDTO(1L,"name","name",1,1.0,1L));
         orderDetailDTO.setBookId(1L);
+        orderDetailSet = new HashSet<>();
+        orderDetailDTOSet = new HashSet<>();
+        orderDetailSet.add(orderDetail);
+        orderDetailDTOSet.add(orderDetailDTO);
     }
 
     @Test
@@ -48,6 +58,18 @@ class OrderDetailMapperTest {
     void toEntity_whenDtoGiven_shouldReturnEntity() {
         OrderDetail result = orderDetailMapper.toEntity(orderDetailDTO);
         assertEquals(result.getId(), orderDetail.getId());
+    }
+
+    @Test
+    void toEntitySet_whenDtoSetGiven_shouldReturnEntitySet() {
+        Set<OrderDetail> result = orderDetailMapper.toEntitySet(orderDetailDTOSet);
+        assertEquals(result.size(), orderDetailSet.size());
+    }
+
+    @Test
+    void toDtoSet_whenEntitySetGiven_shouldReturnDtoSet() {
+        Set<OrderDetailDTO> result = orderDetailMapper.toDTOSet(orderDetailSet);
+        assertEquals(result.size(), orderDetailDTOSet.size());
     }
 
 }

@@ -27,6 +27,7 @@ public class OrderMapper implements Mapper<Order, OrderDTO> {
         CustomerMapper customerMapper = new CustomerMapper();
         OrderDetailMapper orderDetailMapper = new OrderDetailMapper();
         return Order.builder()
+                .id(orderDTO.getOrderId())
                 .customer(customerMapper.toEntity(orderDTO.getCustomer()))
                 .status(orderDTO.getStatus())
                 .orderDetails(orderDetailMapper.toEntitySet(orderDTO.getOrderDetailSet()))
