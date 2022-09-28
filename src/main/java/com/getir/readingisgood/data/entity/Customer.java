@@ -17,7 +17,7 @@ import java.io.Serializable;
 public class Customer implements Serializable {
     private static final long serialVersionUID = 4672956563103427805L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
     private Long customerId;
     private String name;

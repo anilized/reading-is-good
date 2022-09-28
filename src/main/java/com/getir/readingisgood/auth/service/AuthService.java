@@ -10,7 +10,7 @@ import org.springframework.security.core.Authentication;
 public interface AuthService {
     UserDetailsImpl authenticateUser(LoginRequest loginRequest, Authentication authentication);
     User registerUser(SignupRequest signupRequest) throws AuthNotSupported;
-
+    User registerUserAsAdmin(SignupRequest signupRequest) throws AuthNotSupported;
     String generateJwtToken(Authentication authentication);
 
     Authentication authenticate(LoginRequest loginRequest);

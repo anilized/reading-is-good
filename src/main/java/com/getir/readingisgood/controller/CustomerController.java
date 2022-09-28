@@ -27,8 +27,8 @@ import javax.validation.Valid;
 @RestController
 @Tag(name = "customer", description = "Customer API")
 @RequestMapping("/api/customer")
-@PreAuthorize("hasRole('ROLE_ADMIN')")
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class CustomerController implements IBaseController {
 
     private final ICustomerService customerService;
@@ -40,11 +40,12 @@ public class CustomerController implements IBaseController {
             @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = CustomerDTO.class))),
             @ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
+    @PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_CUSTOMER')")
     public ResponseEntity<CustomerDTO> findById(@PathVariable @Parameter(name = "id", description = "customer id") Long id) {
         return ResponseEntity.ok(customerService.findById(id));
     }
 
-    @PostMapping("/create")
+    @PostMapping
     @Operation(summary = "Create customer", description = "Create customer", tags = "customer")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", content = @Content(schema = @Schema(implementation = CustomerDTO.class))),
@@ -62,10 +63,7 @@ public class CustomerController implements IBaseController {
             @ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
             @ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
-    public ResponseEntity<Page<OrderDTO>> findAllOrdersById(
-            @PathVariable @Parameter(name = "customer id") Long id,
-            @Valid @Parameter(name = "pagination request", schema = @Schema(implementation = PaginationRequest.class)) PaginationRequest paginationRequest
-    ) {
+    public ResponseEntity<Page<OrderDTO>> findAllOrdersById(@PathVariable @Parameter(name = "customer id") Long id, @Valid @Parameter(name = "pagination request", schema = @Schema(implementation = PaginationRequest.class)) PaginationRequest paginationRequest) {
         CustomerDTO customerDTO = customerService.findById(id);
         return ResponseEntity.ok(orderService.findAllOrdersByCustomerId(customerDTO.getCustomerId(), paginationRequest));
     }

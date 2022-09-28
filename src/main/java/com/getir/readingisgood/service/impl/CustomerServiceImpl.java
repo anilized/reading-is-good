@@ -1,6 +1,7 @@
 package com.getir.readingisgood.service.impl;
 
 import com.getir.readingisgood.auth.domain.request.SignupRequest;
+import com.getir.readingisgood.auth.entity.User;
 import com.getir.readingisgood.auth.repository.IUserRepository;
 import com.getir.readingisgood.auth.service.AuthService;
 import com.getir.readingisgood.data.dto.CustomerDTO;
@@ -11,8 +12,10 @@ import com.getir.readingisgood.exception.CustomerAlreadyExistsException;
 import com.getir.readingisgood.exception.CustomerNotFoundException;
 import com.getir.readingisgood.service.ICustomerService;
 import com.getir.readingisgood.util.CreateCustomerHelper;
+import com.getir.readingisgood.util.PasswordEncoderUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
 
@@ -27,6 +30,8 @@ public class CustomerServiceImpl implements ICustomerService {
 
     final AuthService authService;
 
+    final PasswordEncoderUtil passwordEncoderUtil;
+
     final CustomerRepository customerRepository;
 
     @Override
@@ -34,14 +39,17 @@ public class CustomerServiceImpl implements ICustomerService {
         SignupRequest signupRequest = CreateCustomerHelper.mapToSignUpRequest(customerDTO);
 
         // REGISTER USER WITH AUTH SERVICE
-        authService.registerUser(signupRequest);
+        customerDTO.setPassword(passwordEncoderUtil.encodePassword(customerDTO.getEmail()));
+        signupRequest.setPassword(customerDTO.getPassword());
+        User user = authService.registerUserAsAdmin(signupRequest);
         Customer customer = customerMapper.toEntity(customerDTO);
-        customer.setPassword(customerDTO.getEmail());
+        customer.setCustomerId(user.getId());
 
         // ADD REGISTERED USER TO TABLE IF DOES NOT REGISTERED BEFORE
         getByEmail(customer.getEmail()).ifPresentOrElse(customerDTO1 -> {
             throw new CustomerAlreadyExistsException();
-        }, () -> customerRepository.save(customer));
+        }, () -> customerDTO.setCustomerId(customerRepository.save(customer).getCustomerId()));
+
         return customerDTO;
     }
 
