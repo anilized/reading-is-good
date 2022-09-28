@@ -1,10 +1,7 @@
 package com.getir.readingisgood.service;
 
-import com.getir.readingisgood.data.dto.BookDTO;
+import com.getir.readingisgood.data.domain.request.OrderDetailRequest;
 import com.getir.readingisgood.data.dto.OrderDetailDTO;
-
-import java.util.List;
-
 public interface IOrderDetailService {
-    OrderDetailDTO createOrderDetail(OrderDetailDTO orderDetailDTO);
+    OrderDetailDTO createOrderDetail(OrderDetailRequest orderDetailRequest);
 }

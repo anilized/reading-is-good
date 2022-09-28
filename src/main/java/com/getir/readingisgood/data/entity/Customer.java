@@ -20,10 +20,8 @@ public class Customer implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
     private Long customerId;
-
     private String name;
     private String surname;
-
     private String email;
     private String password;
 

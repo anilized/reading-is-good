@@ -1,10 +1,12 @@
 package com.getir.readingisgood.service.impl;
 
+import com.getir.readingisgood.data.domain.request.CreateOrderRequest;
+import com.getir.readingisgood.data.domain.request.PaginatedFindAllRequest;
 import com.getir.readingisgood.data.constants.OrderStatusEnum;
-import com.getir.readingisgood.data.domain.request.DateIntervalRequest;
 import com.getir.readingisgood.data.domain.request.PaginationRequest;
 import com.getir.readingisgood.data.dto.CustomerDTO;
 import com.getir.readingisgood.data.dto.OrderDTO;
+import com.getir.readingisgood.data.dto.OrderDetailDTO;
 import com.getir.readingisgood.data.entity.Order;
 import com.getir.readingisgood.data.entity.OrderDetail;
 import com.getir.readingisgood.data.mapper.OrderDetailMapper;
@@ -19,6 +21,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Service
@@ -46,17 +49,21 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    public Page<OrderDTO> findAllOrdersWithDateInterval(DateIntervalRequest dateIntervalRequest, PaginationRequest paginationRequest) {
-        return orderRepository.findAllByCreateDateBetween(dateIntervalRequest.getStartDate(),
-                dateIntervalRequest.getEndDate(),
-                PageRequest.of(paginationRequest.getPage(), paginationRequest.getSize()))
+    public Page<OrderDTO> findAllOrdersWithDateInterval(PaginatedFindAllRequest  paginatedFindAllRequest) {
+        return orderRepository.findAllByCreateDateBetween(paginatedFindAllRequest.getDateIntervalRequest().getStartDate(), paginatedFindAllRequest.getDateIntervalRequest().getEndDate(),
+                PageRequest.of(paginatedFindAllRequest.getPaginationRequest().getPage(), paginatedFindAllRequest.getPaginationRequest().getSize()))
                 .map(orderMapper::toDTO);
     }
 
     @Transactional
     @Override
-    public OrderDTO createOrder(OrderDTO orderDTO, CustomerDTO customerDTO) {
-        orderDTO.getOrderDetailSet().stream().forEach(orderDetailService::createOrderDetail);
+    public OrderDTO createOrder(CreateOrderRequest createOrderRequest, CustomerDTO customerDTO) {
+        OrderDTO orderDTO = new OrderDTO();
+        Set<OrderDetailDTO> orderDetailDTOSet = new HashSet<>();
+        createOrderRequest.getOrderDetailSet().stream().forEach(
+                od -> orderDetailDTOSet.add(orderDetailService.createOrderDetail(od))
+        );
+        orderDTO.setOrderDetailSet(orderDetailDTOSet);
         Set<OrderDetail> orderDetailSet = orderDetailMapper.toEntitySet(orderDTO.getOrderDetailSet());
         orderDTO.setCustomer(customerDTO);
         orderDTO.setStatus(OrderStatusEnum.PENDING.getStatus());

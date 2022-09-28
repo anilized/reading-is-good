@@ -1,15 +1,14 @@
 package com.getir.readingisgood.controller;
 
+import com.getir.readingisgood.data.domain.request.CreateOrderRequest;
+import com.getir.readingisgood.data.domain.request.PaginatedFindAllRequest;
 import com.getir.readingisgood.auth.service.impl.UserDetailsImpl;
 import com.getir.readingisgood.controller.base.IBaseController;
-import com.getir.readingisgood.data.domain.request.DateIntervalRequest;
-import com.getir.readingisgood.data.domain.request.PaginationRequest;
 import com.getir.readingisgood.data.dto.CustomerDTO;
 import com.getir.readingisgood.data.dto.OrderDTO;
 import com.getir.readingisgood.service.ICustomerService;
 import com.getir.readingisgood.service.IOrderService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,9 +27,9 @@ public class OrderController implements IBaseController {
     private final ICustomerService customerService;
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
     @PostMapping(consumes = "application/json")
-    public ResponseEntity<OrderDTO> createOrder(@RequestBody @Valid OrderDTO orderDTO, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<OrderDTO> createOrder(@RequestBody @Valid CreateOrderRequest createOrderRequest, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         CustomerDTO customerDTO = customerService.getByEmail(userDetails.getEmail()).get();
-        return new ResponseEntity<>(orderService.createOrder(orderDTO, customerDTO), HttpStatus.CREATED);
+        return new ResponseEntity<>(orderService.createOrder(createOrderRequest, customerDTO), HttpStatus.CREATED);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -40,9 +39,9 @@ public class OrderController implements IBaseController {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping("/orders-between-dates")
-    public ResponseEntity<Page<OrderDTO>> findAllOrdersBetweenDates(@RequestBody @Valid DateIntervalRequest dateIntervalRequest, @Valid PaginationRequest paginationRequest) {
-        return ResponseEntity.ok(orderService.findAllOrdersWithDateInterval(dateIntervalRequest, paginationRequest));
+    @GetMapping(value = "/orders-between-dates", consumes = "application/json")
+    public ResponseEntity<Page<OrderDTO>> findAllOrdersBetweenDates(@RequestBody @Valid PaginatedFindAllRequest paginatedFindAllRequest) {
+        return ResponseEntity.ok(orderService.findAllOrdersWithDateInterval(paginatedFindAllRequest));
     }
 
 }

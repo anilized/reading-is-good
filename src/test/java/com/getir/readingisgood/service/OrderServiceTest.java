@@ -1,13 +1,12 @@
 package com.getir.readingisgood.service;
 
+import com.getir.readingisgood.data.domain.request.PaginatedFindAllRequest;
 import com.getir.readingisgood.data.domain.request.DateIntervalRequest;
 import com.getir.readingisgood.data.domain.request.PaginationRequest;
 import com.getir.readingisgood.data.dto.BookDTO;
 import com.getir.readingisgood.data.dto.CustomerDTO;
 import com.getir.readingisgood.data.dto.OrderDTO;
 import com.getir.readingisgood.data.dto.OrderDetailDTO;
-import com.getir.readingisgood.data.entity.Customer;
-import com.getir.readingisgood.data.entity.Order;
 import com.getir.readingisgood.data.mapper.CustomerMapper;
 import com.getir.readingisgood.data.mapper.OrderDetailMapper;
 import com.getir.readingisgood.data.mapper.OrderMapper;
@@ -32,7 +31,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class OrderServiceTest {
+class OrderServiceTest {
     @InjectMocks
     OrderServiceImpl orderService;
     @Mock
@@ -52,9 +51,11 @@ public class OrderServiceTest {
     private static Set<OrderDetailDTO> orderDetailDTOSet;
     private static PaginationRequest paginationRequest;
     private static DateIntervalRequest dateIntervalRequest;
+    private static PaginatedFindAllRequest paginatedFindAllRequest;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
+        paginatedFindAllRequest = new PaginatedFindAllRequest();
         dateIntervalRequest = new DateIntervalRequest();
         dateIntervalRequest.setStartDate(new Date());
         dateIntervalRequest.setEndDate(new Date(2022,12,12));
@@ -80,26 +81,28 @@ public class OrderServiceTest {
         orderDTO.setCustomer(customerDTO);
         orderDTO.setCreateDate(new Date());
         orderDTO.setOrderDetailSet(orderDetailDTOSet);
+        paginatedFindAllRequest.setDateIntervalRequest(dateIntervalRequest);
+        paginatedFindAllRequest.setPaginationRequest(paginationRequest);
     }
 
     @Test
-    public void findOrderById_whenOrderNotExist_thenThrowOrderNotFound() {
+    void findOrderById_whenOrderNotExist_thenThrowOrderNotFound() {
         when(orderRepository.findById(any())).thenReturn(Optional.empty());
         assertThrows(OrderNotFoundException.class, () -> orderService.findOrderById(1L));
     }
 
     @Test
-    public void findAllOrdersByCustomerId_whenNoOrderFoundForCustomer_thenReturnEmptyPage() {
+    void findAllOrdersByCustomerId_whenNoOrderFoundForCustomer_thenReturnEmptyPage() {
         when(orderRepository.findAllByCustomer(1L,PageRequest.of(paginationRequest.getPage(), paginationRequest.getSize()))).thenReturn(Page.empty());
         when(orderService.findAllOrdersByCustomerId(1L, paginationRequest)).thenReturn(Page.empty());
         assertEquals(Page.empty().getContent().size(), orderService.findAllOrdersByCustomerId(1L, paginationRequest).getContent().size());
     }
 
     @Test
-    public void findAllOrdersBetweenDate_whenNoOrderFound_thenReturnEmptyPage() {
-        when(orderRepository.findAllByCreateDateBetween(dateIntervalRequest.getStartDate(),dateIntervalRequest.getEndDate(),PageRequest.of(paginationRequest.getPage(), paginationRequest.getSize()))).thenReturn(Page.empty());
-        when(orderService.findAllOrdersWithDateInterval(dateIntervalRequest, paginationRequest)).thenReturn(Page.empty());
-        assertEquals(Page.empty().getContent().size(), orderService.findAllOrdersWithDateInterval(dateIntervalRequest, paginationRequest).getContent().size());
+    void findAllOrdersBetweenDate_whenNoOrderFound_thenReturnEmptyPage() {
+        when(orderRepository.findAllByCreateDateBetween(paginatedFindAllRequest.getDateIntervalRequest().getStartDate(),paginatedFindAllRequest.getDateIntervalRequest().getEndDate(),PageRequest.of(paginatedFindAllRequest.getPaginationRequest().getPage(), paginatedFindAllRequest.getPaginationRequest().getSize()))).thenReturn(Page.empty());
+        when(orderService.findAllOrdersWithDateInterval(paginatedFindAllRequest)).thenReturn(Page.empty());
+        assertEquals(Page.empty().getContent().size(), orderService.findAllOrdersWithDateInterval(paginatedFindAllRequest).getContent().size());
     }
 
 

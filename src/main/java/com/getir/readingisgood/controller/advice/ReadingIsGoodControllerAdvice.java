@@ -46,15 +46,5 @@ public class ReadingIsGoodControllerAdvice {
         return new ResponseEntity<>(errorMap,HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(value = {Exception.class})
-    public ResponseEntity<ErrorResponse> handleUnknownException(Exception ex) {
-        String errorMessageDesc = ex.getLocalizedMessage();
-        if(errorMessageDesc == null) errorMessageDesc = ex.toString();
-
-        ErrorResponse errorResponse = new ErrorResponse(new Date(), HttpStatus.INTERNAL_SERVER_ERROR.toString(),errorMessageDesc, HttpStatus.INTERNAL_SERVER_ERROR);
-        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-
-    }
-
 
 }
