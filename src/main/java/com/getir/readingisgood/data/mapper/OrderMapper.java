@@ -5,9 +5,6 @@ import com.getir.readingisgood.data.entity.Order;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.Set;
-import java.util.stream.Collectors;
-
 @Component
 @RequiredArgsConstructor
 public class OrderMapper implements Mapper<Order, OrderDTO> {
