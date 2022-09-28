@@ -20,7 +20,7 @@ public class Order implements Serializable {
     private static final long serialVersionUID = -192133758060230170L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     @JoinColumn(name = "customerId", nullable = false)

@@ -1,17 +1,13 @@
 package com.getir.readingisgood.logging;
 
-import com.getir.readingisgood.auth.entity.User;
+
 import com.getir.readingisgood.auth.service.impl.UserDetailsImpl;
-import com.getir.readingisgood.auth.service.impl.UserDetailsServiceImpl;
 import com.getir.readingisgood.exception.BusinessFault;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -27,12 +23,10 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class LoggerAspect {
     private final LogService logService;
-
     @Pointcut("within(@org.springframework.web.bind.annotation.RestController *)")
     public void controllerPointcut() {
 
     }
-
     @AfterThrowing(pointcut = "controllerPointcut()", throwing = "ex")
     public void logError(JoinPoint joinPoint, Exception ex) throws IOException {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
@@ -50,7 +44,13 @@ public class LoggerAspect {
         if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {
             builder.userId(((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId());
         }
-        logService.logToDatabase(builder .build());
+        try {
+            logService.logToDatabase(builder .build());
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(e.getLocalizedMessage());
+        }
+
     }
 
     @AfterReturning(value = "controllerPointcut()", returning = "result")
@@ -64,6 +64,11 @@ public class LoggerAspect {
         if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {
             builder.userId(((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId());
         }
-        logService.logToDatabase(builder.build());
+        try {
+            logService.logToDatabase(builder.build());
+        } catch (Exception e) {
+            log.error(e.getLocalizedMessage());
+            e.printStackTrace();
+        }
     }
 }

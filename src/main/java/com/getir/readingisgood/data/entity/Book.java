@@ -15,8 +15,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class Book {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bookId;
     @Schema(description = "Name of the book", example = "The Lord of the Rings: Return of the King")
     private String name;

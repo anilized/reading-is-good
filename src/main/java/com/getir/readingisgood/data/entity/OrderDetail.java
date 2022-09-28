@@ -17,7 +17,7 @@ import java.io.Serializable;
 public class OrderDetail implements Serializable {
     private static final long serialVersionUID = 727158111416171098L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @EqualsAndHashCode.Include
     @NotNull

@@ -36,6 +36,5 @@ public class LogEntity {
 
     private String operation;
     @Column(columnDefinition = "TEXT")
-    @Basic(fetch = FetchType.LAZY)
     private String response;
 }
