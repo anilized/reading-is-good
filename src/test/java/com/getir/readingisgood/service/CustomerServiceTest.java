@@ -25,7 +25,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class CustomerServiceTest {
+class CustomerServiceTest {
     @InjectMocks
     CustomerServiceImpl customerService;
 
@@ -45,7 +45,7 @@ public class CustomerServiceTest {
     private static Customer customer;
 
     @BeforeEach
-    public void init() {
+    void init() {
         customerDTO = CustomerDTO.builder()
                 .email("test@test.com")
                 .password("test@test.com")
@@ -64,7 +64,7 @@ public class CustomerServiceTest {
     }
 
     @Test
-    public void persistConsumer_whenEmailAlreadyExists_thenThrowCustomerAlreadyException() {
+    void persistConsumer_whenEmailAlreadyExists_thenThrowCustomerAlreadyException() {
         when(customerRepository.findByEmail(customerDTO.getEmail()))
                 .thenReturn(Optional.of(customer));
         when(authService.registerUserAsAdmin(any())).thenReturn(new User());
@@ -72,7 +72,7 @@ public class CustomerServiceTest {
     }
 
     @Test
-    public void persistConsumer_whenEmailNotExistsAndParametersFullyFilled_thenReturnSuccessResponse() {
+    void persistConsumer_whenEmailNotExistsAndParametersFullyFilled_thenReturnSuccessResponse() {
         customerDTO.setCustomerId(1L);
         User user = new User();
         user.setEmail(customerDTO.getEmail());
@@ -91,7 +91,7 @@ public class CustomerServiceTest {
     }
 
     @Test
-    public void getConsumer_whenCustomerNotFound_thenThrowCustomerNotFoundException() {
+    void getConsumer_whenCustomerNotFound_thenThrowCustomerNotFoundException() {
         when(customerRepository.findById(customerDTO.getCustomerId()))
                 .thenReturn(Optional.empty());
         assertThrows(CustomerNotFoundException.class, () -> customerService.findById(customerDTO.getCustomerId()));

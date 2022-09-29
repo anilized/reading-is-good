@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class OrderStatisticsTest {
+class OrderStatisticsTest {
 
     @InjectMocks
     OrderStatisticsImpl orderStatistics;
@@ -36,7 +36,7 @@ public class OrderStatisticsTest {
     private static OrderReport orderReport;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         orderReport = new OrderReport();
         orderReport.setMonth("SEPTEMBER");
         orderReport.setMonthIndex(9);
@@ -46,7 +46,7 @@ public class OrderStatisticsTest {
     }
 
     @Test
-    public void getOrderStatisticsForCustomer_whenNoExceptionOccurs_thenOK() {
+    void getOrderStatisticsForCustomer_whenNoExceptionOccurs_thenOK() {
         List<IOrderReport> customerOrders = new ArrayList<>();
         IOrderReport orderReport1 = new IOrderReport() {
             @Override
@@ -81,14 +81,14 @@ public class OrderStatisticsTest {
     }
 
     @Test
-    public void getOrderStatisticsForCustomer_whenCustomerHasNoOrder_thenThrowException() {
+    void getOrderStatisticsForCustomer_whenCustomerHasNoOrder_thenThrowException() {
         List<IOrderReport> emptyList = new ArrayList<>();
         when(orderRepository.generateReportForCustomer(1L)).thenReturn(emptyList);
         assertThrows(CustomerHasNoOrderException.class, () -> orderStatistics.getOrderStatisticsForCustomer(1L));
     }
 
     @Test
-    public void getOrderStatistics_whenOrderFound_thenOK() {
+    void getOrderStatistics_whenOrderFound_thenOK() {
         List<IOrderReport> customerOrders = new ArrayList<>();
         IOrderReport orderReport1 = new IOrderReport() {
             @Override
@@ -123,7 +123,7 @@ public class OrderStatisticsTest {
     }
 
     @Test
-    public void getOrderStatistics_whenNoOrderFound_thenThrowException() {
+    void getOrderStatistics_whenNoOrderFound_thenThrowException() {
         List<IOrderReport> emptyList = new ArrayList<>();
         when(orderRepository.generateReportForAllOrders()).thenReturn(emptyList);
         assertThrows(OrderNotFoundException.class, () -> orderStatistics.getOrderStatistics());

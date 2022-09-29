@@ -63,7 +63,7 @@ public class CustomerControllerIT {
 
     @Test
     @WithMockUser(authorities = "ROLE_ADMIN")
-    public void createCustomer_whenValidCustomerDTOGiven_shouldReturnCreated() throws Exception {
+    void createCustomer_whenValidCustomerDTOGiven_shouldReturnCreated() throws Exception {
         when(customerService.createCustomer(customerDTO)).thenReturn(customerDTO);
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders
                         .post("/api/customer")
@@ -76,7 +76,7 @@ public class CustomerControllerIT {
 
     @Test
     @WithMockUser(authorities = "ROLE_ADMIN")
-    public void findById_whenCustomerIdGiven_shouldReturnResponse() throws Exception {
+    void findById_whenCustomerIdGiven_shouldReturnResponse() throws Exception {
         when(customerService.findById(1L)).thenReturn(customerDTO2);
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/customer/{id}", "1")

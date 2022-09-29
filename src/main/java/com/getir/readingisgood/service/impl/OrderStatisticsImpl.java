@@ -22,7 +22,7 @@ public class OrderStatisticsImpl implements IOrderStatisticService {
     public List<OrderReport> getOrderStatisticsForCustomer(Long customerId) {
         List<IOrderReport> customerOrders;
         customerOrders = orderRepository.generateReportForCustomer(customerId);
-        if(customerOrders.size() == 0 || null == customerOrders) {
+        if(customerOrders.isEmpty() || null == customerOrders) {
             throw new CustomerHasNoOrderException();
         } else {
             return helper.createOrderReport(customerOrders);
@@ -32,7 +32,7 @@ public class OrderStatisticsImpl implements IOrderStatisticService {
     @Override
     public List<OrderReport> getOrderStatistics() {
         List<IOrderReport> orderReports = orderRepository.generateReportForAllOrders();
-        if(orderReports.size() == 0 || null == orderReports) {
+        if(orderReports.isEmpty() || null == orderReports) {
             throw new OrderNotFoundException();
         } else {
             return helper.createOrderReport(orderReports);

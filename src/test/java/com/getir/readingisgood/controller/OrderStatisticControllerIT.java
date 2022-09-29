@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc(addFilters = false)
 @Rollback(value = true)
 @ActiveProfiles("test")
-public class OrderStatisticControllerIT {
+class OrderStatisticControllerIT {
 
     @MockBean
     IOrderStatisticService orderStatisticService;
@@ -45,7 +45,7 @@ public class OrderStatisticControllerIT {
     private List<OrderReport> orderReportList;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         orderReportList = new ArrayList<>();
         mockMvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
         orderReport = new OrderReport();
@@ -59,7 +59,7 @@ public class OrderStatisticControllerIT {
 
     @Test
     @WithMockUser(authorities = "ROLE_ADMIN")
-    public void getUserOrderStatistics_givenCustomerId_thenReturnMonthlyReportList() throws Exception {
+    void getUserOrderStatistics_givenCustomerId_thenReturnMonthlyReportList() throws Exception {
         when(orderStatisticService.getOrderStatisticsForCustomer(1L)).thenReturn(orderReportList);
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/statistics/{id}", "1")
@@ -72,7 +72,7 @@ public class OrderStatisticControllerIT {
 
     @Test
     @WithMockUser(authorities = "ROLE_ADMIN")
-    public void getOrderStatistics_thenReturnMonthlyReportList() throws Exception {
+    void getOrderStatistics_thenReturnMonthlyReportList() throws Exception {
         when(orderStatisticService.getOrderStatistics()).thenReturn(orderReportList);
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/statistics")

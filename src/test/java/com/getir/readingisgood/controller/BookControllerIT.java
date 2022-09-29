@@ -74,7 +74,7 @@ public class BookControllerIT {
 
     @Test
     @WithMockUser(authorities = "ROLE_ADMIN")
-    public void createBook_whenValidBookDtoGiven_shouldReturnCreated() throws Exception {
+    void createBook_whenValidBookDtoGiven_shouldReturnCreated() throws Exception {
         when(bookService.createBook(bookDTO1)).thenReturn(bookDTO2);
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders
                         .post("/api/book")
@@ -87,7 +87,7 @@ public class BookControllerIT {
 
     @Test
     @WithMockUser(authorities = "ROLE_ADMIN")
-    public void updateBook_whenValidBookDtoGiven_shouldReturnOK() throws Exception {
+    void updateBook_whenValidBookDtoGiven_shouldReturnOK() throws Exception {
         bookDTOResponse.setStock(3);
         when(bookService.findById(1L)).thenReturn(bookDTORequest);
         when(bookService.updateBookStock(bookDTORequest,3)).thenReturn(bookDTOResponse);

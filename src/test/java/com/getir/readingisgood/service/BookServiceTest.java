@@ -25,7 +25,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class BookServiceTest {
+class BookServiceTest {
 
 
     @InjectMocks
@@ -67,18 +67,18 @@ public class BookServiceTest {
     }
 
     @Test
-    public void isStockAvailable_whenStockNotEnough_thenThrowNoAvailableStock() {
+    void isStockAvailable_whenStockNotEnough_thenThrowNoAvailableStock() {
         assertThrows(NoAvailableStockException.class, () -> bookService.isStockAvailable(bookDTO, bookDTO.getStock()+1));
     }
 
     @Test
-    public void updateStock_whenOptimisticFailureOccured_thenThrowStockModified() {
+    void updateStock_whenOptimisticFailureOccured_thenThrowStockModified() {
         when(bookRepository.save(any())).thenThrow(OptimisticLockingFailureException.class);
         assertThrows(StockModifiedException.class, () -> bookService.updateBookStock(bookDTO, 5));
     }
 
     @Test
-    public void updateStock_whenNoExceptionOccured_thenUpdateAndReturnResponse() {
+    void updateStock_whenNoExceptionOccured_thenUpdateAndReturnResponse() {
         when(bookRepository.save(any())).then(val -> {
             book.setStock(5);
             return book;

@@ -33,7 +33,7 @@ public class AuthController {
         UserDetailsImpl userDetails = authService.authenticateUser(loginRequest, authentication);
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
-                .collect(Collectors.toList());
+                .toList();
         return ResponseEntity.ok(new JwtResponse(jwt,"Bearer",
                 userDetails.getId(),
                 userDetails.getUsername(),
