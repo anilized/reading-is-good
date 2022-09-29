@@ -4,6 +4,7 @@ import com.getir.readingisgood.controller.base.IBaseController;
 import com.getir.readingisgood.data.domain.response.ErrorResponse;
 import com.getir.readingisgood.data.domain.response.OrderReport;
 import com.getir.readingisgood.service.IOrderStatisticService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -11,6 +12,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,12 +23,14 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "order-statistics", description = "Order Statistics API")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 @RequestMapping("/api/statistics")
 public class OrderStatisticsController implements IBaseController {
 
     private final IOrderStatisticService orderStatisticService;
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get customer order statistics", description = "Get user order statistics", tags = "order-statistics")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", content = @Content(schema = @Schema(implementation = OrderReport.class))),
             @ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
@@ -37,6 +41,7 @@ public class OrderStatisticsController implements IBaseController {
     }
 
     @GetMapping
+    @Operation(summary = "Get statistics for all orders", description = "Get statistics for all orders", tags = "order-statistics")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", content = @Content(schema = @Schema(implementation = OrderReport.class))),
             @ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),

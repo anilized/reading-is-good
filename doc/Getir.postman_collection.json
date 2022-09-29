@@ -1,0 +1,1051 @@
+{
+	"info": {
+		"_postman_id": "123f8c68-3578-4144-9658-8b5627011c2a",
+		"name": "Getir",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "signup",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0bWFpbEBnbWFpbC5jb20iLCJpYXQiOjE2NjQxNDA2NzEsImV4cCI6MTY2NDIyNzA3MX0.52w-gHZwWKe2tZ3Lk5f37LwCAwjLpgDhbwAxXhmbgrHvwhm6oBKhuEjhO0LcxkGeRcokCVc1ObjchcbzSk2o2Q",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\" : \"testadmin\",\n    \"email\" : \"testadmin@gmail.com\",\n    \"password\" : \"12345678\",\n    \"name\" : \"Test\",\n    \"surname\" : \"Admin\",\n    \"roles\" : [\n        \"admin\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "signup-as-admin",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0bWFpbEBnbWFpbC5jb20iLCJpYXQiOjE2NjQxNDA2NzEsImV4cCI6MTY2NDIyNzA3MX0.52w-gHZwWKe2tZ3Lk5f37LwCAwjLpgDhbwAxXhmbgrHvwhm6oBKhuEjhO0LcxkGeRcokCVc1ObjchcbzSk2o2Q",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\" : \"testadmin\",\n    \"email\" : \"testadmin@gmail.com\",\n    \"password\" : \"12345678\",\n    \"name\" : \"Test\",\n    \"surname\" : \"Admin\",\n    \"roles\" : [\n        \"admin\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/auth/signup",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"auth",
+										"signup"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "signup-as-customer",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0bWFpbEBnbWFpbC5jb20iLCJpYXQiOjE2NjQxNDA2NzEsImV4cCI6MTY2NDIyNzA3MX0.52w-gHZwWKe2tZ3Lk5f37LwCAwjLpgDhbwAxXhmbgrHvwhm6oBKhuEjhO0LcxkGeRcokCVc1ObjchcbzSk2o2Q",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\" : \"testcustomer\",\n    \"email\" : \"testcustomer@gmail.com\",\n    \"password\" : \"12345678\",\n    \"name\" : \"Test\",\n    \"surname\" : \"Customer\",\n    \"roles\" : [\n        \"test\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/auth/signup",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"auth",
+										"signup"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "signin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\" : \"tcbyadmin@gmail.com\",\n    \"password\" : \"tcbyadmin@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/signin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "signin-as-admin",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\" : \"testadmin\",\n    \"password\" : \"12345678\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/auth/signin",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"auth",
+										"signin"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "signin-as-customer",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\" : \"testcustomer@gmail.com\",\n    \"password\" : \"12345678\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/auth/signin",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"auth",
+										"signin"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Book",
+			"item": [
+				{
+					"name": "create-book",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJpYXQiOjE2NjQ0MTczMjMsImV4cCI6MTY2NDUwMzcyM30.iFcB0A0DhrugMbc7OFf5nU1dpsCsfdzbTv9baaHdA52MzcSaAY8uUQBqvfD5-BPwHcqGuWqvHnKm280MbpcS6A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2Rhc2QiLCJpYXQiOjE2NjQ0MDc5NDksImV4cCI6MTY2NDQ5NDM0OX0.4Wj990YgI3oe2v48N2goJIzgQRe9jJZ_SPjIV_7tDTXKvDXU42r2DYPGnfPzJDaC1bWfKa2Ndhrg-obrj24O7g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"Neuromancer\",\n    \"authorName\" : \"William Gibson\",\n    \"stock\" : 8,\n    \"price\" : 12.35\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/book",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"book"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "create-book",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJpYXQiOjE2NjQ0MTczMjMsImV4cCI6MTY2NDUwMzcyM30.iFcB0A0DhrugMbc7OFf5nU1dpsCsfdzbTv9baaHdA52MzcSaAY8uUQBqvfD5-BPwHcqGuWqvHnKm280MbpcS6A",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\" : \"Neuromancer\",\n    \"authorName\" : \"William Gibson\",\n    \"stock\" : 8,\n    \"price\" : 12.35\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/book",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"book"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "update-stock",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJpYXQiOjE2NjQ0MTczMjMsImV4cCI6MTY2NDUwMzcyM30.iFcB0A0DhrugMbc7OFf5nU1dpsCsfdzbTv9baaHdA52MzcSaAY8uUQBqvfD5-BPwHcqGuWqvHnKm280MbpcS6A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmlsIiwiaWF0IjoxNjY0MjIxMjE2LCJleHAiOjE2NjQzMDc2MTZ9.VqiJg1Ex5j3nf3xm0XqNtIRVAAaJkxcQ9QJU87xSZj_i5_fPWmj2rVpkbhpM6jhTSfVthiJ-34qn_nDr03mNKQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/book/:id?stock=5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"book",
+								":id"
+							],
+							"query": [
+								{
+									"key": "stock",
+									"value": "5"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "update-stock",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJpYXQiOjE2NjQ0MTczMjMsImV4cCI6MTY2NDUwMzcyM30.iFcB0A0DhrugMbc7OFf5nU1dpsCsfdzbTv9baaHdA52MzcSaAY8uUQBqvfD5-BPwHcqGuWqvHnKm280MbpcS6A",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/book/:id?stock=2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"book",
+										":id"
+									],
+									"query": [
+										{
+											"key": "stock",
+											"value": "2"
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "create-customer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJpYXQiOjE2NjQ0MTczMjMsImV4cCI6MTY2NDUwMzcyM30.iFcB0A0DhrugMbc7OFf5nU1dpsCsfdzbTv9baaHdA52MzcSaAY8uUQBqvfD5-BPwHcqGuWqvHnKm280MbpcS6A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\" : \"tcbyadmin@gmail.com\",\n    \"name\" : \"cust\",\n    \"surname\" : \"admincreated\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/customer",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"customer"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "create-customer",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\" : \"testcustbyadmin@gmail.com\",\n    \"name\" : \"cust\",\n    \"surname\" : \"admincreated\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/customer",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"customer"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "find-by-id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJpYXQiOjE2NjQ0MTczMjMsImV4cCI6MTY2NDUwMzcyM30.iFcB0A0DhrugMbc7OFf5nU1dpsCsfdzbTv9baaHdA52MzcSaAY8uUQBqvfD5-BPwHcqGuWqvHnKm280MbpcS6A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/customer/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"customer",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "find-by-id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJpYXQiOjE2NjQ0MTczMjMsImV4cCI6MTY2NDUwMzcyM30.iFcB0A0DhrugMbc7OFf5nU1dpsCsfdzbTv9baaHdA52MzcSaAY8uUQBqvfD5-BPwHcqGuWqvHnKm280MbpcS6A",
+										"type": "text"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/customer/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"customer",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "find-all-orders-by-id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJpYXQiOjE2NjQ0MTczMjMsImV4cCI6MTY2NDUwMzcyM30.iFcB0A0DhrugMbc7OFf5nU1dpsCsfdzbTv9baaHdA52MzcSaAY8uUQBqvfD5-BPwHcqGuWqvHnKm280MbpcS6A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/customer/:id/orders",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"customer",
+								":id",
+								"orders"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "find-all-orders-by-id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/customer/:id/orders",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"customer",
+										":id",
+										"orders"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "create-order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0Y2J5YWRtaW5AZ21haWwuY29tIiwiaWF0IjoxNjY0NDE3OTAwLCJleHAiOjE2NjQ1MDQzMDB9.dLfesYVCSDBL-O4YBkljj5f78dj8SSmxaEr0ojmDleAj1d1oRNDB7J7_wxvLYMoWKdQChv_ZRLtMnsCuyWKUuA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"orderDetailSet\": [\n        {\n            \"bookId\": 1,\n            \"amount\": 2\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/order",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"order"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "create-order",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"orderDetailSet\": [\n        {\n            \"bookId\": 1,\n            \"amount\": 3\n        },\n        {\n            \"bookId\": 2,\n            \"amount\": 1\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/order",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"order"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "find-order-by-id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJpYXQiOjE2NjQ0MTc5NjcsImV4cCI6MTY2NDUwNDM2N30.NOnjlOdexKV9rwNatW-iAwSchq48pE1SDitJcKV3OyEKVwF-LyRD8boiqw5OOXbNM_fN7HdZoknAyagdoUVxKg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/order/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"order",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "find-order-by-id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJpYXQiOjE2NjQ0MTc5NjcsImV4cCI6MTY2NDUwNDM2N30.NOnjlOdexKV9rwNatW-iAwSchq48pE1SDitJcKV3OyEKVwF-LyRD8boiqw5OOXbNM_fN7HdZoknAyagdoUVxKg",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/order/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"order",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "find-all-orders-between-dates",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJpYXQiOjE2NjQ0MTc5NjcsImV4cCI6MTY2NDUwNDM2N30.NOnjlOdexKV9rwNatW-iAwSchq48pE1SDitJcKV3OyEKVwF-LyRD8boiqw5OOXbNM_fN7HdZoknAyagdoUVxKg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"dateIntervalRequest\": {\n    \"startDate\": \"2022-09-27\",\n    \"endDate\": \"2022-12-28\"\n  },\n  \"paginationRequest\": {\n    \"page\": 0,\n    \"size\": 50\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/order/orders-between-dates",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"order",
+								"orders-between-dates"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "find-all-orders-between-dates",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"dateIntervalRequest\": {\n    \"startDate\": \"2022-09-27\",\n    \"endDate\": \"2022-12-28\"\n  },\n  \"paginationRequest\": {\n    \"page\": 0,\n    \"size\": 50\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/order/orders-between-dates?page=0&size=10",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"order",
+										"orders-between-dates"
+									],
+									"query": [
+										{
+											"key": "startDate",
+											"value": "2022-09-25",
+											"disabled": true
+										},
+										{
+											"key": "endDate",
+											"value": "2022-12-01",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Statistics",
+			"item": [
+				{
+					"name": "get-order-statistics-for-customer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJpYXQiOjE2NjQ0MTc5NjcsImV4cCI6MTY2NDUwNDM2N30.NOnjlOdexKV9rwNatW-iAwSchq48pE1SDitJcKV3OyEKVwF-LyRD8boiqw5OOXbNM_fN7HdZoknAyagdoUVxKg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/statistics/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"statistics",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get-order-statistics-for-customer",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJpYXQiOjE2NjQ0MTc5NjcsImV4cCI6MTY2NDUwNDM2N30.NOnjlOdexKV9rwNatW-iAwSchq48pE1SDitJcKV3OyEKVwF-LyRD8boiqw5OOXbNM_fN7HdZoknAyagdoUVxKg",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/statistics/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"statistics",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "get-statistics-for-all-orders",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJpYXQiOjE2NjQ0MTc5NjcsImV4cCI6MTY2NDUwNDM2N30.NOnjlOdexKV9rwNatW-iAwSchq48pE1SDitJcKV3OyEKVwF-LyRD8boiqw5OOXbNM_fN7HdZoknAyagdoUVxKg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/statistics",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"statistics"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get-statistics-for-all-orders",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJpYXQiOjE2NjQ0MTc5NjcsImV4cCI6MTY2NDUwNDM2N30.NOnjlOdexKV9rwNatW-iAwSchq48pE1SDitJcKV3OyEKVwF-LyRD8boiqw5OOXbNM_fN7HdZoknAyagdoUVxKg",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/statistics",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"statistics"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		}
+	]
+}

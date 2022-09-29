@@ -9,6 +9,7 @@ import com.getir.readingisgood.data.dto.CustomerDTO;
 import com.getir.readingisgood.data.dto.OrderDTO;
 import com.getir.readingisgood.service.ICustomerService;
 import com.getir.readingisgood.service.IOrderService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -34,6 +35,7 @@ public class OrderController implements IBaseController {
     private final ICustomerService customerService;
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
     @PostMapping(consumes = "application/json")
+    @Operation(summary = "Create order", description = "Creates order", tags = "order")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", content = @Content(schema = @Schema(implementation = OrderDTO.class))),
             @ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
@@ -45,6 +47,7 @@ public class OrderController implements IBaseController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/{id}")
+    @Operation(summary = "Find order by Id", description = "Find order by Id", tags = "order")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = OrderDTO.class))),
             @ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
@@ -56,6 +59,7 @@ public class OrderController implements IBaseController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(value = "/orders-between-dates", consumes = "application/json")
+    @Operation(summary = "Find all orders between dates", description = "Find all orders between dates", tags = "order")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = Page.class))),
             @ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
