@@ -12,6 +12,7 @@ import com.getir.readingisgood.auth.service.AuthService;
 import com.getir.readingisgood.data.entity.Customer;
 import com.getir.readingisgood.data.repository.CustomerRepository;
 import com.getir.readingisgood.exception.AuthNotSupported;
+import com.getir.readingisgood.exception.AuthTypeNotFoundException;
 import com.getir.readingisgood.exception.CustomerAlreadyExistsException;
 import com.getir.readingisgood.exception.UsernameAlreadyInUseException;
 import com.getir.readingisgood.util.PasswordEncoderUtil;
@@ -79,12 +80,12 @@ public class AuthServiceImpl implements AuthService {
             switch (role) {
                 case "admin":
                     Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-                            .orElseThrow(() -> new AuthNotSupported());
+                            .orElseThrow(() -> new AuthTypeNotFoundException());
                     roles.add(adminRole);
                     break;
                 case "customer":
                     Role customerRole = roleRepository.findByName(ERole.ROLE_CUSTOMER)
-                            .orElseThrow(() -> new AuthNotSupported());
+                            .orElseThrow(() -> new AuthTypeNotFoundException());
                     roles.add(customerRole);
                     break;
                 default:
@@ -129,12 +130,12 @@ public class AuthServiceImpl implements AuthService {
             switch (role) {
                 case "admin":
                     Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-                            .orElseThrow(() -> new AuthNotSupported());
+                            .orElseThrow(() -> new AuthTypeNotFoundException());
                     roles.add(adminRole);
                     break;
                 case "customer":
                     Role customerRole = roleRepository.findByName(ERole.ROLE_CUSTOMER)
-                            .orElseThrow(() -> new AuthNotSupported());
+                            .orElseThrow(() -> new AuthTypeNotFoundException());
                     roles.add(customerRole);
                     break;
                 default:
